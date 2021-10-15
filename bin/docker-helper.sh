@@ -112,7 +112,7 @@ function Run() {
 
 
 # Get the options
-while getopts "ht" option; do
+while getopts "ht:" option; do
    case $option in
         h) # help
           Help
