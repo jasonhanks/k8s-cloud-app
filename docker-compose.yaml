@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  k8s-cloud-app:
+    build:
+      context: .
+    image: k8s-cloud-app:latest
+    container_name: k8s-cloud-app
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    #volumes:
+    #  - ./:/app
+      
+
