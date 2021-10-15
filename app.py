@@ -26,8 +26,8 @@ api.add_resource(HealthHandler, '/health')
 
 
 if __name__ == "__main__":
-    app.config['ENV'] = os.environ['ENVIRONMENT'] if os.environ['ENVIRONMENT'] else "production"
-    app.run(debug=False, port=3000, host='0.0.0.0')
+    app.config['ENV'] = os.environ['ENVIRONMENT'] if 'ENVIRONMENT' in os.environ else "production"
+    app.run(debug=False, port=80, host='0.0.0.0')
 
 
 # End of File

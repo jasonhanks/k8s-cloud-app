@@ -1,4 +1,3 @@
-#FROM node:14.13.0-alpine3.12
 FROM python:3.10
 
 
@@ -15,7 +14,7 @@ ENV GIT_HASH=${GIT_HASH:-dev}
 # Create our user account
 #RUN adduser -D -h /app cloud
 RUN useradd -m -d /app cloud
-USER cloud
+#USER cloud
 WORKDIR /app
 
 
@@ -38,7 +37,7 @@ RUN cd frontend && npm install && npm run build
 
 
 # Default to running on port 3000
-EXPOSE 3000
+EXPOSE 80
 
 
 # Specify the Flask environment to load

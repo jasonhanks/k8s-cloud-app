@@ -1,16 +1,14 @@
-#!/bin/bash
-
-
-export ENVIRONMENT=production
-export SKIP_BUILD_REACT=false
-export VERBOSE=false
+PROJECT_ROOT="$(dirname "$(dirname "$(readlink -fm "$0")")")"
+ENVIRONMENT=production
+SKIP_BUILD_REACT=false
+VERBOSE=false
 
 
 Help() {
-   # Display Help
    echo "Startup script for the k8s-cloud-app process"
    echo
    echo "Syntax: startup.sh [-g|h|v]"
+   echo
    echo "options:"
    echo "h)     Print this Help"
    echo "e)     Load specific Flask environment"
@@ -22,19 +20,11 @@ Help() {
 
 Main() {
     # Figure out our absolute pathname for the parent folder and change dir there
-    export PROJECT_ROOT="$(dirname "$(dirname "$(readlink -fm "$0")")")"
     cd ${PROJECT_ROOT}
-
 
     # Load the proper environment
     if [ "$VERBOSE" == "true" ]; then echo "Loading python virtual environment.."; fi
     source env/bin/activate
-
-
-    # Display our entire environment for debugging purposes
-    #echo "Running with following environment variables:"
-    #printenv
-
 
     if [ "$SKIP_BUILD_REACT" != "true" ]; then
         # Run the npm build from the React scripts
@@ -42,7 +32,6 @@ Main() {
         cd frontend && time npm run build && cd ${PROJECT_ROOT}
         echo
     fi
-
 
     # Execute the Flask web server process here (app.py)
     if [ "$VERBOSE" == "true" ]; then echo "Running the Flask web application server in $FLASK_ENV environment with DEBUG=${DEBUG}.."; fi
