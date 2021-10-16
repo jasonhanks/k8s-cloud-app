@@ -21,27 +21,55 @@ Use the following command to launch the Docker Hub container that is generated f
     docker run --rm -p 3000:80 jasonhanks/k8s-cloud-app
 ```
 
-This will launch the container with the internal web port 80 exposed externally on port 3000. 
+Alternative, using Docker Compose you can run the following command:
+
+```
+docker-compose up
+```
+
+This will launch the container with the internal container port 80 exposed externally on port 3000. 
 
 You can then access the container using the URL: http://localhost:3000/
 
 
+# Building the Container manually
+
+You can also build the container locally from the project source using the following command from the project root folder:
+
+```
+docker build -t k8s-cloud-app .
+```
+
+This will build a local image with the image name **k8s-cloud-app** that can be launched using the following command:
+
+```
+docker run -rm -p 3000:80 k8s-cloud-app
+```
+
+This will launch your local version of the container with the container's web port exposed locally on port 3000. 
+
+You can then access the container using the following URL: http://localhost:3000/
+
+
+
 # Running the Helm Chart in Kubernetes
 
-You can deploy this application to a Kubernetes cluster. The Helm Chart files are located in the *helm/* folder and instructions for customizing a deployment are provided below.
+You can also deploy this application to a Kubernetes cluster. The Helm Chart files are located in the *helm/* folder and instructions for customizing a deployment are provided below.
 
 
 ## Default Helm Chart
 
 By default the provided Helm chart will deploy a single instances to your Kubernetes cluster that will need to be accessed using port forwarding functionality of *kubectl*. 
 
-In order to deploy the default configuration use the following command from a shell configured with access to a Kubernetes cluster and Helm:
+In order to deploy the default configuration use the following command from a shell configured with access to a Kubernetes cluster and Helm installation:
 
 ```
     helm install k8s-cloud-app helm/
 ```
 
-This will deploy the application with a name of *k8s-cloud-app*. In Kubernetes this will generate a Service, Deployment, and associated Pod with the app deployed in the *default* namespace. You can customize the namespace by providing the proper parameters to the *helm install* command.
+This will deploy the application with a name of *k8s-cloud-app*. In Kubernetes this will generate a Service, Deployment, and associated Pod with the app deployed in the *default* namespace. 
+
+You can customize the namespace used in Kubernetes using the *--namespace=<namespace>* parameter to the *helm install* command.
 
 If your Kubernetes cluster is working when you install the Helm Chart you should see the following output:
 
@@ -74,13 +102,37 @@ Once you see this output you should be able to acces it using the following URL:
 
 ## Customizing the Helm Chart deployment
 
-If you wish to deploy the app to a Kubernetes cluster using Helm you can generate the *values.yaml* used to customize your deployment using the following command from the project root folder:
+If you wish to deploy the app to a Kubernetes cluster using Helm you can generate the *values.yaml* used to customize your deployment using the following command in the project root folder:
 
 ```
  helm show values helm/ > k8s-cloud-app-values.yaml
 ```
 
-You can then edit this file as needed to customize the deployment as needed. 
+You can then edit this file to customize the deployment as needed. An example *values.yaml* below shows how to deploy multiple *replicas*, resource limits per Pod, and an *Ingress* allowing reverse proxy access to the Service (DNS entries will need to be setup to forward this host name into your Kubernetes cluster nodes):
+
+```
+# Start 2 Pods by default
+replicaCount: 2
+
+# Send all traffic sent to k8s-cloud.example.com to our Service
+ingress:
+  enabled: true
+  hosts:
+    - host: k8s-cloud-app.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+
+# Pod resources limits
+resources:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+```
 
 
 ## Installing the Helm Chart
@@ -90,22 +142,3 @@ When you are satisfied with the configuration use the following command to deplo
 ```
 helm install k8s-cloud-app helm/ -f ./k8s-cloud-app-values.yaml
 ```
-
-
-# Building the Container manually
-
-You can also build the container locally from the project source using the following command from the project root folder:
-
-```
-docker build -t k8s-cloud-app .
-```
-
-This will build a local image with the image name **k8s-cloud-app** that can be launched using the following command:
-
-```
-docker run -rm -p 3000:80 k8s-cloud-app
-```
-
-This will launch your local version of the container with the container's web port exposed locally on port 3000. 
-
-You can then access the container using the following URL: http://localhost:3000/
