@@ -135,6 +135,23 @@ resources:
 ```
 
 
+## Accessing a custom Ingress Service
+
+```
+user@machine:~/projects/k8s-cloud-app$ helm install k8s-cloud-app helm -f ~/projects/helm/k8s-cloud-all__values.yaml
+NAME: k8s-cloud-app
+LAST DEPLOYED: Sat Oct 16 00:42:08 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://k8s-cloud-app.example.com/
+```
+
+You should then be able to access the application using the URL: http://k8s-cloud-app.example.com (or whatever your proper domain name is)
+
+
 ## Installing the Helm Chart
 
 When you are satisfied with the configuration use the following command to deploy the application to your Kubernetes cluster from the project root folder:
