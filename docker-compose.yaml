@@ -4,7 +4,7 @@ services:
   k8s-cloud-app:
     build:
       context: .
-    image: k8s-cloud-app:latest
+    image: jasonhanks/k8s-cloud-app:latest
     container_name: k8s-cloud-app
     restart: unless-stopped
     ports:
