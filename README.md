@@ -138,7 +138,7 @@ resources:
 ## Accessing a custom Ingress Service
 
 ```
-user@machine:~/projects/k8s-cloud-app$ helm install k8s-cloud-app helm -f ~/projects/helm/k8s-cloud-all__values.yaml
+user@machine:~/projects/k8s-cloud-app$ helm install k8s-cloud-app helm -f ./k8s-cloud-app-values.yaml
 NAME: k8s-cloud-app
 LAST DEPLOYED: Sat Oct 16 00:42:08 2021
 NAMESPACE: default
