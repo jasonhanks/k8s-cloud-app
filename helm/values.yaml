@@ -24,13 +24,13 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
+  
 podAnnotations: {}
 
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext:
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -53,8 +53,8 @@ ingress:
     - host: k8s-cloud-app.local
       paths:
         - path: /
-          pathType: ImplementationSpecific
-  tls: []
+          pathType: Prefix
+  #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local

@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api
 from api.HealthHandler import HealthHandler
 
 import os
@@ -26,8 +26,10 @@ api.add_resource(HealthHandler, '/health')
 
 
 if __name__ == "__main__":
-    app.config['ENV'] = os.environ['ENVIRONMENT'] if 'ENVIRONMENT' in os.environ else "production"
-    app.run(debug=False, port=80, host='0.0.0.0')
+    app.config['ENV'] = os.environ['FLASK_ENV'] if 'FLASK_ENV' in os.environ else "production"
+    port = os.environ['FLASK_PORT'] if 'FLASK_PORT' in os.environ else 3000
+    debug = os.environ['FLASK_DEBUG'] if 'FLASK_DEBUG' in os.environ and os.environ['FLASK_DEBUG'] == "true" else False
+    app.run(debug=debug, port=port, host='0.0.0.0')
 
 
 # End of File

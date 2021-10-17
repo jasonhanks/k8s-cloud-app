@@ -2,7 +2,7 @@ PROJECT_ROOT="$(dirname "$(dirname "$(readlink -fm "$0")")")"
 ENVIRONMENT=production
 SKIP_BUILD_REACT=false
 VERBOSE=false
-
+DEBUG=false
 
 Help() {
    echo "Startup script for the k8s-cloud-app process"
@@ -37,13 +37,16 @@ Main() {
     if [ "$VERBOSE" == "true" ]; then echo "Running the Flask web application server in $FLASK_ENV environment with DEBUG=${DEBUG}.."; fi
     #FLASK_ENV=${ENVIRONMENT} flask run --host=0.0.0.0
     cd $PROJECT_ROOT
-    python3 app.py
+    FLASK_DEBUG=${DEBUG} FLASK_ENV=${ENVIRONMENT} python3 app.py
 }
 
 
 # Get the options
-while getopts "e:hrv" option; do
+while getopts "de:hrv" option; do
    case $option in
+        d) # debug mode
+            echo "Using debug mode"
+            DEBUG=true;;
         e) # load environment
             echo "Loading environment: ${OPTARG}"
             ENVIRONMENT=$OPTARG;;

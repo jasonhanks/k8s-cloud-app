@@ -42,7 +42,7 @@ EXPOSE 80
 
 # Specify the Flask environment to load
 ENV ENVIRONMENT=production
-
+ENV FLASK_PORT=80
 
 # Start up the node server process by default
-CMD [ "bash", "-c", "bin/startup.sh -re ${ENVIRONMENT}" ]
+CMD [ "bash", "-c", "FLASK_PORT=${FLASK_PORT} bin/startup.sh -re ${ENVIRONMENT}" ]
