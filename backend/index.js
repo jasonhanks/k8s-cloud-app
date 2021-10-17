@@ -1,12 +1,14 @@
 'use strict'
 
-// const axios = require('axios');
+require('dotenv').config();
 const path = require('path');
 const express = require("express");
 const logger = require('pino')()
 
 const PORT = process.env.PORT || 5000;
 
+
+// Create the Express app server
 const app = express();
 
 // Request logging here
@@ -16,10 +18,9 @@ app.use(require('pino-http')())
 app.use(express.static(path.resolve(__dirname, '../frontend/build')))
 
 
-app.get("/test", (req, res) => {
-  logger.info("TEST request made")
-  res.json({ message: "TEST" })
-})
+//
+// Define request handlers here
+//
 
 
 /**
@@ -28,6 +29,7 @@ app.get("/test", (req, res) => {
  */
 app.get("/health", (req, res) => {
   // Not needed since the Express process is used in production
+  // const axios = require('axios');
   // axios.get('http://localhost:3000').then(response => {
   //   res.json({ message: "OK" });
   // })
@@ -39,6 +41,14 @@ app.get("/health", (req, res) => {
 })
 
 
+app.get("/test", (req, res) => {
+  logger.info("TEST request made")
+  res.json({ message: "TEST" })
+})
+
+
+
+// Start listening for requests
 app.listen(PORT, () => {
   logger.info(`Backend API server listening on http://localhost:${PORT}/`)
 })
