@@ -5,29 +5,29 @@ This is a sample Node based web based application intended to be used for Kubern
 **Note:** *These features will be under ongoing development for the forseeable future.*
 
 
-## React Frontend
+### React Frontend
 
 This project provides a React frontend web application that will expose various features
 of Docker and Kubernetes to control various parts of the application from a web browser. 
 
 
-## Node Backend
+### Node Backend
 
 It also provides a backend Node process that the frontend will communicate with. 
 The React frontend will automatically proxy its requests to the backend Node process.
 
 
-## Docker Container
+### Docker Container
 
 Docker support files that are needed to build and run the container standalone are provided. These include the *Dockerfile* used to build the container itself as well as any supporting files. 
 
 
-## Docker Compose
+### Docker Compose
 
 A *docker-compose.yaml* file that can be used to launch or build the container as needed is also provided for convenience.
 
 
-## Helm Chart
+### Helm Chart
 
 A Helm Chart is provided that can deploy the app to a Kubernetes cluster. Most of the development around this project will be focused around this use case.
 
