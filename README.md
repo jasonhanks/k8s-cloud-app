@@ -1,23 +1,43 @@
 # k8s-cloud-app
 
-This is a sample Python web based application intended to be used for Kubernetes practice and testing in preparation for the CKA / CKAD examinations.
-
-This project provides a Python Flask based web application that can use various features of Docker and Kubernetes to control various parts of the application from a web browser. 
+This is a sample Node based web based application intended to be used for Kubernetes practice and testing in preparation for the CKA / CKAD examinations.
 
 **Note:** *These features will be under ongoing development for the forseeable future.*
 
+
+## React Frontend
+
+This project provides a React frontend web application that will expose various features
+of Docker and Kubernetes to control various parts of the application from a web browser. 
+
+
+## Node Backend
+
+It also provides a backend Node process that the frontend will communicate with. 
+The React frontend will automatically proxy its requests to the backend Node process.
+
+
+## Docker Container
+
 Docker support files that are needed to build and run the container standalone are provided. These include the *Dockerfile* used to build the container itself as well as any supporting files. 
+
+
+## Docker Compose
 
 A *docker-compose.yaml* file that can be used to launch or build the container as needed is also provided for convenience.
 
-Lastly, a Helm Chart is provided that can deploy the app to a Kubernetes cluster. Most of the development around this project will be focused around this use case.
+
+## Helm Chart
+
+A Helm Chart is provided that can deploy the app to a Kubernetes cluster. Most of the development around this project will be focused around this use case.
+
 
 
 # Running the *official* container
 
 Use the following command to launch the Docker Hub container that is generated from this project:
 
-    docker run --rm -p 3000:80 jasonhanks/k8s-cloud-app
+    docker run --rm -p 3000:3000 jasonhanks/k8s-cloud-app
 
 Alternative, using Docker Compose you can run the following command:
 
@@ -28,6 +48,7 @@ This will launch the container with the internal container port 80 exposed exter
 You can then access the container using the URL: http://localhost:3000/
 
 
+
 # Building the Container manually
 
 You can also build the container locally from the project source using the following command from the project root folder:
@@ -36,7 +57,7 @@ You can also build the container locally from the project source using the follo
 
 This will build a local image with the image name **k8s-cloud-app** that can be launched using the following command:
 
-    docker run -rm -p 3000:80 k8s-cloud-app
+    docker run -rm -p 3000:3000 k8s-cloud-app
 
 This will launch your local version of the container with the container's web port exposed locally on port 3000. 
 
@@ -147,3 +168,4 @@ You should then be able to access the application using the URL: http://k8s-clou
 When you are satisfied with the configuration use the following command to deploy the application to your Kubernetes cluster from the project root folder:
 
     helm install k8s-cloud-app helm/ -f ./k8s-cloud-app-values.yaml
+

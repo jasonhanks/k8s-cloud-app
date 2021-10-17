@@ -70,6 +70,22 @@ function Main() {
     build) # build the container
       Build
       exit;;
+    build_and_push) # build and push
+      Build
+      Push
+      exit;;
+    build_and_push_all) # build and push tag and latest tag
+      if [[ "${TAG}" == "latest" ]] ; then echo "ERROR: tag has not been specified using -t option" && exit 1; fi
+
+      # Deploy the tag
+      Build
+      Push
+
+      # Deploy the latest tag as well
+      TAG=latest
+      Build
+      Push
+      exit;;
     info) # display information
       Info
       exit;;
@@ -78,6 +94,9 @@ function Main() {
       exit;;
     run) # run local container
       Run
+      exit;;
+    shell) # run local container shell
+      Shell
       exit;;
   esac
   echo
@@ -89,7 +108,10 @@ function Push() {
   echo
 
   # Create the local tag that will be deployed from local repository
+  echo docker rmi ${REMOTE_REPO}:${TAG}
   docker rmi ${REMOTE_REPO}:${TAG}
+
+  echo docker tag ${LOCAL_REPO}:${TAG} ${REMOTE_REPO}:${TAG}
   docker tag ${LOCAL_REPO}:${TAG} ${REMOTE_REPO}:${TAG}
   if [ $? -ne 0 ]; then
     echo "ERROR occurred while creating Docker tag"
@@ -107,12 +129,18 @@ function Push() {
 
 function Run() {
   echo "Running Docker container from local repository ${LOCAL_REPO}:${TAG}"
-  docker run -it --rm -p 3000:80 ${LOCAL_REPO}:${TAG}
+  docker run -it --rm -p 3000:3000 ${LOCAL_REPO}:${TAG}
+}
+
+
+function Shell() {
+  echo "Running Docker container shell from local repository ${LOCAL_REPO}:${TAG}"
+  docker run -it --rm -p 3000:3000 ${LOCAL_REPO}:${TAG} bash
 }
 
 
 # Get the options
-while getopts "ht:" option; do
+while getopts "hlrt:" option; do
    case $option in
         h) # help
           Help

@@ -13,6 +13,7 @@ function App() {
       console.log("SUCCESS", response)
       setGetMessage(response)
     }).catch(error => {
+      setGetMessage(error)
       console.log(error)
     })
 

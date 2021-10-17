@@ -1,0 +1,36 @@
+{
+  "name": "k8s-cloud-app",
+  "version": "1.0.0",
+  "description": "This is a sample Python web based application intended to be used for Kubernetes practice and testing in preparation for the CKA / CKAD examinations.",
+  "main": "index.js",
+  "engines": {
+    "node": "v16.11.1",
+    "npm": "8.0.0"
+  },
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "devel": "concurrently \"node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && npm start\"",
+    "start": "node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonhanks/k8s-cloud-app.git"
+  },
+  "keywords": [],
+  "author": "Jason Hanks <jason.e.hanks@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasonhanks/k8s-cloud-app/issues"
+  },
+  "homepage": "https://github.com/jasonhanks/k8s-cloud-app#readme",
+  "dependencies": {
+    "axios": "^0.23.0",
+    "concurrently": "^6.3.0",
+    "create-react-app": "^4.0.3",
+    "express": "^4.17.1",
+    "pino": "^7.0.2",
+    "pino-http": "^5.8.0",
+    "pino-pretty": "^7.1.0"
+  }
+}
