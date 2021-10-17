@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "cd frontend && npm run build",
-    "devel": "concurrently \"node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && npm start\"",
+    "devel": "concurrently \"nodemon node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && npm start\"",
     "start": "node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +29,7 @@
     "concurrently": "^6.3.0",
     "create-react-app": "^4.0.3",
     "express": "^4.17.1",
+    "nodemon": "^2.0.13",
     "pino": "^7.0.2",
     "pino-http": "^5.8.0",
     "pino-pretty": "^7.1.0"
