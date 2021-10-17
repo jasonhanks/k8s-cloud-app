@@ -1,7 +1,4 @@
-__pycache__
-
-env/
-backend/node_modules
+node_modules
+**/node_modules
 
 frontend/build
-frontend/node_modules
