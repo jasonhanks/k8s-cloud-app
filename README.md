@@ -74,6 +74,9 @@ You can also deploy this application to a Kubernetes cluster. The Helm Chart fil
 
 By default the provided Helm chart will deploy a single instances to your Kubernetes cluster that will need to be accessed using port forwarding functionality of *kubectl*. 
 
+
+### Installing the Helm Chart
+
 In order to deploy the default configuration use the following command from a shell configured with access to a Kubernetes cluster and Helm installation:
 
     helm install k8s-cloud-app helm/
@@ -107,7 +110,7 @@ In order to access the Kubernetes deploement you should use the commands provide
 Once you see this output you should be able to acces it using the following URL: http://localhost:8080/
 
 
-## Customizing the Helm Chart deployment
+## Helm Chart configuration
 
 If you wish to deploy the app to a Kubernetes cluster using Helm you can generate the default *values.yaml* used to customize your deployment using the following command:
 
@@ -138,7 +141,9 @@ You can then edit this file to customize the deployment as needed. An example *v
         memory: 512Mi
 
 
-You can then use the specified value overrides when deploying the Helm chart:
+### Installing the Helm Chart
+
+When you are satisfied with the configuration use the following command to deploy the application to your Kubernetes cluster from the project root folder:
 
     user@machine:~/projects/k8s-cloud-app$ helm install k8s-cloud-app helm/ -f ~/k8s-cloud-app-values.yaml
     NAME: k8s-cloud-app
@@ -151,7 +156,7 @@ You can then use the specified value overrides when deploying the Helm chart:
       http://k8s-cloud-app.example.com/
 
 
-## Accessing a custom Ingress Service
+### Accessing a custom Ingress
 
 In the previous example value overrides above an *Ingress* was created which will map the *k8s-cloud-app.example.com* domain name to the defined
 Kubernetes *Service* that has been created by the Helm chart. In order for this to work there must be a DNS entry (or /etc/hosts entry) that
@@ -161,11 +166,3 @@ This will send all web traffic sent to this address to the Kubernetes cluster wh
 sent to the appropriate backend *Service*.
 
 You should then be able to access the application using the URL: http://k8s-cloud-app.example.com (or whatever your proper domain name is)
-
-
-## Installing the Helm Chart
-
-When you are satisfied with the configuration use the following command to deploy the application to your Kubernetes cluster from the project root folder:
-
-    helm install k8s-cloud-app helm/ -f ./k8s-cloud-app-values.yaml
-
