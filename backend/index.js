@@ -37,15 +37,15 @@ app.use(express.static(path.resolve(__dirname, '../frontend/build')))
  */
 app.get("/health", (req, res) => {
   // Not needed since the Express process is used in production
-  const axios = require('axios');
-  axios.get('http://localhost:3000/index.html').then(response => {
-    res.json({ message: "OK" });
-  })
-  .catch(err => {
-    console.error("[ERROR] /health: "+ err.message)
-    res.json({ message: "ERROR: "+ err.message, status: req.status })
-  });
-  // res.json({ message: "OK" })
+  // const axios = require('axios');
+  // axios.get('http://localhost:3000/index.html').then(response => {
+  //   res.json({ message: "OK" });
+  // })
+  // .catch(err => {
+  //   console.error("[ERROR] /health: "+ err.message)
+  //   res.json({ message: "ERROR: "+ err.message, status: req.status })
+  // });
+  res.json({ message: "OK" })
 })
 
 

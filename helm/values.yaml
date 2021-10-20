@@ -16,6 +16,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 
+# Environment variables passed to the Deployment template
+environment: []
+
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

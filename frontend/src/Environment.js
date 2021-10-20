@@ -33,21 +33,15 @@ function Environment() {
         <br/>
 
         <h3>Docker</h3> 
-        <p>
-          When using Docker you can specify these environment variables using a few different methods.                     
-        </p>
-        <p>
-          <i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
-          they will be filtered out and not available to the React application even if they are available to the container.</i>
-        </p>
+        <p>When using Docker you can specify these environment variables using a few different methods.</p>
+        <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
+          they will be filtered out and not available to the React application even if they are available to the container.</i></p>
 
         <h4>--env option</h4>
-        <p>
-          You can specify each environment variable you want to be available in the container using the 
-          <i>--env=&lt;var&gt;="&lt;value&gt;"</i> syntax. An exmaple is shown below:
-        </p>
+        <p>You can specify each environment variable you want to be available in the container using the 
+          <i>--env=&lt;var&gt;="&lt;value&gt;"</i> syntax. An exmaple is shown below:</p>
         <pre>
-          <code data-language="python" children={
+          <code data-language="shell" children={
 `dev@dev:~/k8s-cloud-app$ docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env=REACT_APP_BG_COLOR="lightgreen" jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
 REACT_APP_BG_COLOR=lightgreen
 dev@dev:~/k8s-cloud-app$
@@ -56,15 +50,54 @@ dev@dev:~/k8s-cloud-app$
         </pre>
 
         <h4>--env-file option</h4>
-        You can specify a filename that contains any number of environment variables to specify in the container. 
-        This is done using the <i>--env-file=&lt;filename&gt;</i> syntax.
+        <p>You can specify a filename that contains any number of environment variables to specify in the container. 
+        This is done using the <i>--env-file=&lt;filename&gt;</i> syntax.</p>
 
-        You can launch the container using a file containing the environment variables using the following command:
+        <p>You can launch the container using a file containing the environment variables using the following command:</p>
         <pre>
-          <code data-language="python" children={
+          <code data-language="shell" children={
 `# Create the environment file to be passed in
 dev@dev:~/k8s-cloud-app$ docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env-file=./.env.example jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
 REACT_APP_BG_COLOR=lightcyan
+dev@dev:~/k8s-cloud-app$
+`
+          }></code>
+        </pre>
+
+
+        <h3>Helm Chart</h3>
+        <p>When using Helm you can specify these environment variables using the custom <i>values.yaml</i> file.</p>
+        <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
+          they will be filtered out and not available to the React application even if they are available to the container.</i></p>
+
+          <p>You can create these environment variables using the folloing sample values.yaml file:</p>
+          <pre>
+          <code data-language="shell" children={
+`cat << EOF >> ~/k8s-app-cloud-values.yaml
+environment:
+  - name: REACT_APP_BG_COLOR
+    value: lightyellow
+EOF
+`
+          }></code>
+        </pre>
+
+        <p>You can then deploy the Helm Chart using the following command line:</p>
+        <pre>
+          <code data-language="shell" children={
+`dev@dev:~/k8s-cloud-app$ helm install k8s-cloud-app -f ~/k8s-cloud-app-values.yaml helm/
+NAME: k8s-cloud-app
+LAST DEPLOYED: Wed Oct 20 13:17:10 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=k8s-cloud-app,app.kubernetes.io/instance=k8s-cloud-app" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+
 dev@dev:~/k8s-cloud-app$
 `
           }></code>
