@@ -16,7 +16,7 @@ function Environment() {
       <h1>Environment</h1>
       <p>This section shows the environment variables that have been populated for this process.</p>
 
-      <div className="container">
+      <div className="container-fluid">
         <table style={{ backgroundColor: process.env.REACT_APP_BG_COLOR }}>
           <thead>
             <tr>
@@ -32,12 +32,12 @@ function Environment() {
         </table>
         <br/>
 
-        <h3>Docker</h3> 
+        <h2>Docker</h2>
         <p>When using Docker you can specify these environment variables using a few different methods.</p>
         <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
           they will be filtered out and not available to the React application even if they are available to the container.</i></p>
 
-        <h4>--env option</h4>
+        <h3>--env option</h3>
         <p>You can specify each environment variable you want to be available in the container using the 
           <i>--env=&lt;var&gt;="&lt;value&gt;"</i> syntax. An exmaple is shown below:</p>
         <pre>
@@ -49,9 +49,20 @@ dev@dev:~/k8s-cloud-app$
           }></code>
         </pre>
 
-        <h4>--env-file option</h4>
+        <h3>--env-file option</h3>
         <p>You can specify a filename that contains any number of environment variables to specify in the container. 
-        This is done using the <i>--env-file=&lt;filename&gt;</i> syntax.</p>
+        This is done using the <i>--env-file=&lt;filename&gt;</i> syntax. You can create the .env file using the following command:</p>
+
+
+        <pre>
+          <code data-language="shell" children={
+`cat << EOF > ./.env
+REACT_APP_BG_COLOR=lightgreen
+EOF
+`
+          }></code>
+        </pre>
+        
 
         <p>You can launch the container using a file containing the environment variables using the following command:</p>
         <pre>
@@ -65,7 +76,7 @@ dev@dev:~/k8s-cloud-app$
         </pre>
 
 
-        <h3>Helm Chart</h3>
+        <h2>Helm Chart</h2>
         <p>When using Helm you can specify these environment variables using the custom <i>values.yaml</i> file.</p>
         <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
           they will be filtered out and not available to the React application even if they are available to the container.</i></p>
