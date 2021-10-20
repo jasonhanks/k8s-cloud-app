@@ -71,7 +71,7 @@ EOF
           <code data-language="shell" children={
 `# Create the environment file to be passed in
 docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env-file=./.env.example jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
-REACT_APP_BG_COLOR=lightcyan
+REACT_APP_BG_COLOR=lightgreen
 `
           }></code>
         </pre>
