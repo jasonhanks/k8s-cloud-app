@@ -1,16 +1,12 @@
 {
-  "name": "k8s-cloud-app",
+  "name": "k8s-cloud-app-api",
   "version": "1.0.0",
   "description": "This is a sample Python web based application intended to be used for Kubernetes practice and testing in preparation for the CKA / CKAD examinations.",
   "main": "index.js",
-  "engines": {
-    "node": "v16.11.1",
-    "npm": "8.0.0"
-  },
   "scripts": {
-    "build": "cd frontend && npm run build",
-    "devel": "concurrently \"nodemon node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && npm start\"",
-    "start": "node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
+    "build": "cd ../frontend && npm run build",
+    "devel": "concurrently \"PORT=3001 nodemon node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && PORT=3000 npm start\"",
+    "start": "PORT=3000 node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

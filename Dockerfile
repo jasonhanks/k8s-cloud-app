@@ -39,5 +39,4 @@ COPY --chown=cloud:cloud . .
 RUN cd frontend && npm run build
 
 # Launch the Express server which will serve the static frontend files also
-WORKDIR /app/backend
-CMD ["npm", "start"]
+CMD ["bin/startup.sh"]

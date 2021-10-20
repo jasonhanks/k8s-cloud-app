@@ -129,7 +129,7 @@ function Push() {
 
 function Run() {
   echo "Running Docker container from local repository ${LOCAL_REPO}:${TAG}"
-  docker run -it --rm -p 3000:3000 ${LOCAL_REPO}:${TAG}
+  docker run -it --rm --name k8s-cloud-app -p 3000:3000 ${LOCAL_REPO}:${TAG} --env REACT_APP_BG_COLOR=orange
 }
 
 
