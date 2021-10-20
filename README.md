@@ -103,10 +103,9 @@ If your Kubernetes cluster is working when you install the Helm Chart you should
 
 In order to access the Kubernetes deploement you should use the commands provided from the Helm installation output (sample output provided above). When you run the final *kubectl port-forward* command you should see output similar to below:
 
-    dev@dev:~/projects/k8s-cloud-app$ kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+    kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
     Forwarding from 127.0.0.1:8080 -> 80
     Forwarding from [::1]:8080 -> 80
-    dev@dev:~/projects/k8s-cloud-app$
 
 Once you see this output you should be able to acces it using the following URL: http://localhost:8080/
 
@@ -146,7 +145,7 @@ You can then edit this file to customize the deployment as needed. An example *v
 
 When you are satisfied with the configuration use the following command to deploy the application to your Kubernetes cluster from the project root folder:
 
-    dev@dev:~/projects/k8s-cloud-app$ helm install k8s-cloud-app helm/ -f ~/k8s-cloud-app-values.yaml
+    helm install k8s-cloud-app helm/ -f ~/k8s-cloud-app-values.yaml
     NAME: k8s-cloud-app
     LAST DEPLOYED: Sat Oct 16 00:42:08 2021
     NAMESPACE: default
@@ -155,7 +154,6 @@ When you are satisfied with the configuration use the following command to deplo
     NOTES:
     1. Get the application URL by running these commands:
       http://k8s-cloud-app.example.com/
-    dev@dev:~/projects/k8s-cloud-app$
 
 
 ### Accessing a custom Ingress

@@ -32,19 +32,21 @@ function Environment() {
         </table>
         <br/>
 
-        <h2>Docker</h2>
-        <p>When using Docker you can specify these environment variables using a few different methods.</p>
+
         <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
           they will be filtered out and not available to the React application even if they are available to the container.</i></p>
+
+
+        <h2>Docker</h2>
+        <p>When using Docker you can specify these environment variables using a few different methods.</p>
 
         <h3>--env option</h3>
         <p>You can specify each environment variable you want to be available in the container using the 
           <i>--env=&lt;var&gt;="&lt;value&gt;"</i> syntax. An exmaple is shown below:</p>
         <pre>
           <code data-language="shell" children={
-`dev@dev:~/k8s-cloud-app$ docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env=REACT_APP_BG_COLOR="lightgreen" jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
+`docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env=REACT_APP_BG_COLOR="lightgreen" jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
 REACT_APP_BG_COLOR=lightgreen
-dev@dev:~/k8s-cloud-app$
 `
           }></code>
         </pre>
@@ -68,9 +70,8 @@ EOF
         <pre>
           <code data-language="shell" children={
 `# Create the environment file to be passed in
-dev@dev:~/k8s-cloud-app$ docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env-file=./.env.example jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
+docker run --rm --name k8s-cloud-app -it -p 3000:3000 --env-file=./.env.example jasonhanks/k8s-cloud-app:latest env | grep REACT_APP_
 REACT_APP_BG_COLOR=lightcyan
-dev@dev:~/k8s-cloud-app$
 `
           }></code>
         </pre>
@@ -78,9 +79,8 @@ dev@dev:~/k8s-cloud-app$
 
         <h2>Helm Chart</h2>
         <p>When using Helm you can specify these environment variables using the custom <i>values.yaml</i> file.</p>
-        <p><i><b>Note:</b> environment variables must begin with REACT_APP_ in order to show up in the React user interface. Otherwise
-          they will be filtered out and not available to the React application even if they are available to the container.</i></p>
 
+        <h3>Create a custom values.yaml</h3>
           <p>You can create these environment variables using the folloing sample values.yaml file:</p>
           <pre>
           <code data-language="shell" children={
@@ -96,7 +96,7 @@ EOF
         <p>You can then deploy the Helm Chart using the following command line:</p>
         <pre>
           <code data-language="shell" children={
-`dev@dev:~/k8s-cloud-app$ helm install k8s-cloud-app -f ~/k8s-cloud-app-values.yaml helm/
+`helm install k8s-cloud-app -f ~/k8s-cloud-app-values.yaml helm/
 NAME: k8s-cloud-app
 LAST DEPLOYED: Wed Oct 20 13:17:10 2021
 NAMESPACE: default
@@ -108,8 +108,6 @@ NOTES:
   export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
-
-dev@dev:~/k8s-cloud-app$
 `
           }></code>
         </pre>
