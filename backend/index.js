@@ -23,7 +23,7 @@ const app = express();
 app.use(require('pino-http')())
 
 // Have Node serve the files for our compiled React app
-// app.use(express.static(path.resolve(__dirname, '../frontend/build')))
+app.use(express.static(path.resolve(__dirname, '../frontend/build')))
 
 
 //
