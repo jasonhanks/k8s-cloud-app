@@ -45,6 +45,13 @@ function Build() {
 }
 
 
+function Devel() {
+  echo "Launching development environment..."
+  cd ${PROJECT_ROOT}/backend
+  npm run devel
+}
+
+
 function Info() {
   echo "Docker information:"
   echo "command=${COMMAND}, local repo=${LOCAL_REPO}, remote repo=${REMOTE_REPO}, tag=${TAG}"
@@ -72,6 +79,9 @@ function Main() {
   case ${COMMAND} in
     build) # build the container
       Build
+      exit;;
+    devel) # development environment
+      Devel
       exit;;
     info) # display information
       Info
@@ -136,10 +146,13 @@ function Startup() {
       env > ./.env
   fi
 
+  echo "Compiling React frontend code.."
+  cd ${PROJECT_ROOT}/frontend
+  npm run build
+
   echo "Starting services manually..."
-  HOST=127.0.0.1
   cd ${PROJECT_ROOT}/backend
-  npm run devel
+  npm start
 }
 
 

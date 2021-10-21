@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cd ../frontend && npm run build",
     "devel": "concurrently \"PORT=3001 nodemon node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S\" \"cd ../frontend && PORT=3000 npm start\"",
-    "start": "node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
+    "start": "PORT=3000 node index.js | pino-pretty -i pid,hostname -c -t='sys:yyyy-mm-dd HH:MM:ss TT' -S",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
