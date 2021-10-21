@@ -22,11 +22,11 @@ fi
 
 # Build the React frontend as static files
 # Note: this will happen again in startup.sh in case there are environment changes
-echo "Running the NPM Build process..."
-cd frontend && time npm run build && cd ..
-echo
+#echo "Running the NPM Build process..."
+#cd frontend && time npm run build && cd ..
+#echo
 
 # Launch the backend process
 echo "Running the NPM backend server.."
 cd backend/
-npm start
+npm run devel

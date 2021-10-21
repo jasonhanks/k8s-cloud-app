@@ -1,5 +1,4 @@
 FROM node:16.11-alpine
-#FROM node:16.11
 
 
 # Alpine specific commands
@@ -36,7 +35,7 @@ COPY --chown=cloud:cloud . .
 
 
 # Build the front into static files
-RUN cd frontend && npm run build
+#RUN cd frontend && npm run build
 
 # Launch the Express server which will serve the static frontend files also
 CMD ["bin/startup.sh"]
