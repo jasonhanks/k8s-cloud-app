@@ -38,4 +38,4 @@ COPY --chown=cloud:cloud . .
 #RUN cd frontend && npm run build
 
 # Launch the Express server which will serve the static frontend files also
-CMD ["bin/startup.sh"]
+CMD ["bin/docker-helper.sh", "startup"]

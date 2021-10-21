@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script parameters
-PROJECT_ROOT="$(dirname "$(dirname "$(readlink -fm "$0")")")"
+PROJECT_ROOT="$(dirname "$(dirname "$(readlink -f "$0")")")"
 COMMAND="info"
 LOCAL_REPO="k8s-cloud-app"
 REMOTE_REPO="jasonhanks/k8s-cloud-app"
@@ -14,9 +14,12 @@ function Help() {
   echo "Syntax: docker-helper [-h|-l|-r|-t] <deploy|info>"
   echo
   echo "commands:"
-  echo "build)    Build and tag the local Docker container from the project source"
-  echo "push)     Push a local tag to a remote Docker repository"
-  echo "info)     Display various information about the Docker environment"
+  echo "build)              Build and tag the local Docker container from the project source"
+  echo "info)               Display various information about the Docker environment"
+  echo "push)               Push a local tag to a remote Docker repository"
+  echo "run)                Run the locally built Docker container for testing purposes"
+  echo "shell)              Run a shell inside the local Docker container"
+  echo "startup)            Startup the services manually (Ex: devel or within the container)"
   echo
   echo "options:"
   echo "h)     Print this Help"
@@ -70,22 +73,6 @@ function Main() {
     build) # build the container
       Build
       exit;;
-    build_and_push) # build and push
-      Build
-      Push
-      exit;;
-    build_and_push_all) # build and push tag and latest tag
-      if [[ "${TAG}" == "latest" ]] ; then echo "ERROR: tag has not been specified using -t option" && exit 1; fi
-
-      # Deploy the tag
-      Build
-      Push
-
-      # Deploy the latest tag as well
-      TAG=latest
-      Build
-      Push
-      exit;;
     info) # display information
       Info
       exit;;
@@ -97,6 +84,9 @@ function Main() {
       exit;;
     shell) # run local container shell
       Shell
+      exit;;
+    startup) # startup services manually (Ex: within Docker)
+      Startup
       exit;;
   esac
   echo
@@ -129,13 +119,27 @@ function Push() {
 
 function Run() {
   echo "Running Docker container from local repository ${LOCAL_REPO}:${TAG}"
-  docker run -it --rm --name k8s-cloud-app -p 3000:3000 ${LOCAL_REPO}:${TAG} --env REACT_APP_BG_COLOR=orange
+  docker run -it --rm --name k8s-cloud-app --env REACT_APP_BG_COLOR=orange -p 3000:3000 ${LOCAL_REPO}:${TAG} 
 }
 
 
 function Shell() {
   echo "Running Docker container shell from local repository ${LOCAL_REPO}:${TAG}"
   docker run -it --rm -p 3000:3000 ${LOCAL_REPO}:${TAG} bash
+}
+
+
+function Startup() {
+  unset PORT
+  # If the .env wasn't created through Docker dump our environment to an .env file
+  if [[ ! -f ./.env ]]; then
+      env > ./.env
+  fi
+
+  echo "Starting services manually..."
+  HOST=127.0.0.1
+  cd ${PROJECT_ROOT}/backend
+  npm run devel
 }
 
 
