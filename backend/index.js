@@ -23,7 +23,7 @@ const app = express();
 app.use(require('pino-http')())
 
 // Have Node serve the files for our compiled React app
-app.use(express.static(path.resolve(__dirname, '../frontend/build')))
+// app.use(express.static(path.resolve(__dirname, '../frontend/build')))
 
 
 //
@@ -36,7 +36,7 @@ app.use(express.static(path.resolve(__dirname, '../frontend/build')))
  * is used by Kubernetes for Liveness and Readiness checks.
  */
 app.get("/health", (req, res) => {
-  // Not needed since the Express process is used in production
+  // Verify the React frontend is running
   // const axios = require('axios');
   // axios.get('http://localhost:3000/index.html').then(response => {
   //   res.json({ message: "OK" });
