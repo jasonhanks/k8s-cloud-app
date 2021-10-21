@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   k8s-cloud-app:
-    build:
-      context: .
+    #build:
+    #  context: .
     image: jasonhanks/k8s-cloud-app:latest
     restart: unless-stopped
     ports:
